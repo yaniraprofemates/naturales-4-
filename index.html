@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuaderno Digital de Matemáticas - 1º ESO (4) (IES El Mayorazgo)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mayorazgo: {
+                            purple: '#6B21A8',
+                            purpleLight: '#F3E8FF',
+                            purpleDark: '#581C87',
+                            green: '#15803D',
+                            greenLight: '#DCFCE7',
+                            gold: '#D97706',
+                            goldLight: '#FEF3C7',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .tab-btn.active {
+            border-bottom: 3px solid #6B21A8;
+            color: #6B21A8;
+            font-weight: 700;
+            background-color: #F3E8FF;
+        }
+        @media print {
+            nav, header, button, .no-print { display: none !important; }
+            .tab-content { display: block !important; }
+            body { background-color: white !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-mayorazgo-purpleDark via-mayorazgo-purple to-purple-900 text-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4 text-center md:text-left">
+                    <div class="w-16 h-16 bg-white text-mayorazgo-purple rounded-full flex items-center justify-center font-bold text-2xl shadow-inner border-2 border-mayorazgo-gold">
+                        <i class="fa-solid font-bold text-3xl text-mayorazgo-purple">1º</i>
+                    </div>
+                    <div>
+                        <span class="inline-block px-2 py-0.5 bg-mayorazgo-gold text-slate-900 font-extrabold text-xs rounded mb-1">
+                            IES EL MAYORAZGO
+                        </span>
+                        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Matemáticas 1º ESO (4)</h1>
+                        <p class="text-purple-200 text-sm">Cuaderno Digital Interactivo - Cuaderno de Actividades</p>
+                    </div>
+                </div>
+                <div class="bg-white/10 p-3 rounded-lg backdrop-blur-sm border border-white/20 text-right min-w-[220px]">
+                    <div class="text-xs text-purple-200">Nombre del Alumno/a:</div>
+                    <input type="text" id="studentName" placeholder="Escribe tu nombre..." class="bg-white text-slate-800 px-3 py-1.5 rounded text-sm w-full mt-1 font-semibold focus:ring-2 focus:ring-mayorazgo-gold outline-none">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-30">
+        <div class="max-w-6xl mx-auto px-2 flex overflow-x-auto text-sm border-b border-slate-200">
+            <button type="button" onclick="switchTab('mod1')" id="tab-mod1" class="tab-btn active px-4 py-3 font-medium whitespace-nowrap flex items-center gap-2 transition-colors">
+                <i class="fa-solid fa-list-ol text-mayorazgo-gold"></i> 1. Valor Posicional y Escritura
+            </button>
+            <button type="button" onclick="switchTab('mod2')" id="tab-mod2" class="tab-btn px-4 py-3 font-medium text-slate-600 hover:text-mayorazgo-purple whitespace-nowrap flex items-center gap-2 transition-colors">
+                <i class="fa-solid fa-arrow-down-1-9 text-mayorazgo-gold"></i> 2. Ordenación y Estimación
+            </button>
+            <button type="button" onclick="switchTab('mod3')" id="tab-mod3" class="tab-btn px-4 py-3 font-medium text-slate-600 hover:text-mayorazgo-purple whitespace-nowrap flex items-center gap-2 transition-colors">
+                <i class="fa-solid fa-calculator text-mayorazgo-gold"></i> 3. Sumas y Restas
+            </button>
+            <button type="button" onclick="switchTab('mod4')" id="tab-mod4" class="tab-btn px-4 py-3 font-medium text-slate-600 hover:text-mayorazgo-purple whitespace-nowrap flex items-center gap-2 transition-colors">
+                <i class="fa-solid fa-xmark text-mayorazgo-gold"></i> 4. Multiplicación
+            </button>
+            <button type="button" onclick="switchTab('mod5')" id="tab-mod5" class="tab-btn px-4 py-3 font-medium text-slate-600 hover:text-mayorazgo-purple whitespace-nowrap flex items-center gap-2 transition-colors">
+                <i class="fa-solid fa-puzzle-piece text-mayorazgo-gold"></i> 5. Problemas
+            </button>
+            <button type="button" onclick="switchTab('modSummary')" id="tab-modSummary" class="tab-btn px-4 py-3 font-medium text-slate-600 hover:text-mayorazgo-purple whitespace-nowrap flex items-center gap-2 transition-colors ml-auto bg-mayorazgo-goldLight text-mayorazgo-gold font-bold">
+                <i class="fa-solid fa-award"></i> Resumen y Entrega
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-6 flex-grow w-full">
+
+        <!-- MÓDULO 1 -->
+        <section id="mod1" class="tab-content block space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-mayorazgo-purple">
+                <h2 class="text-xl font-bold text-mayorazgo-purple flex items-center gap-2">
+                    <i class="fa-solid fa-bullseye"></i> Módulo 1: Sistema de Numeración, Lectura y Valor Posicional
+                </h2>
+                <p class="text-slate-600 text-sm mt-1">Completa las preguntas sobre el valor de las cifras y escritura de números en cifras a partir de su texto.</p>
+            </div>
+
+            <!-- Ejercicio 1.1: Lectura a número -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 1.1: Escribe en Cifras</h3>
+                <p class="text-sm text-slate-600">Lee los números escritos en letras y escríbelos utilizando cifras numéricas:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-medium">a) Cinco mil cuatrocientos doce:</label>
+                        <input type="number" id="m1_1a" class="w-full p-2 mt-1 border rounded outline-none focus:ring-2 focus:ring-mayorazgo-purple" placeholder="Escribe el número aquí...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-medium">b) Doce mil trescientos cinco:</label>
+                        <input type="number" id="m1_1b" class="w-full p-2 mt-1 border rounded outline-none focus:ring-2 focus:ring-mayorazgo-purple" placeholder="Escribe el número aquí...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-medium">c) Treinta y cuatro mil ochocientos noventa:</label>
+                        <input type="number" id="m1_1c" class="w-full p-2 mt-1 border rounded outline-none focus:ring-2 focus:ring-mayorazgo-purple" placeholder="Escribe el número aquí...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-medium">d) Setenta y seis mil cuatro:</label>
+                        <input type="number" id="m1_1d" class="w-full p-2 mt-1 border rounded outline-none focus:ring-2 focus:ring-mayorazgo-purple" placeholder="Escribe el número aquí...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejercicio 1.2: Valor posicional -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 1.2: Valor posicional de cifras</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-medium">a) Unidades que representa el <strong>6</strong> en <strong>46.320</strong>:</label>
+                        <input type="number" id="m1_2a" class="w-full p-2 mt-1 border rounded outline-none focus:ring-2 focus:ring-mayorazgo-purple" placeholder="Escribe la cantidad de unidades...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-medium">b) Unidades que representa el <strong>3</strong> en <strong>35.110</strong>:</label>
+                        <input type="number" id="m1_2b" class="w-full p-2 mt-1 border rounded outline-none focus:ring-2 focus:ring-mayorazgo-purple" placeholder="Escribe la cantidad de unidades...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-medium">c) Unidades que representa el <strong>8</strong> en <strong>18.509</strong>:</label>
+                        <input type="number" id="m1_2c" class="w-full p-2 mt-1 border rounded outline-none focus:ring-2 focus:ring-mayorazgo-purple" placeholder="Escribe la cantidad de unidades...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-medium">d) Unidades que representa el <strong>9</strong> en <strong>94.005</strong>:</label>
+                        <input type="number" id="m1_2d" class="w-full p-2 mt-1 border rounded outline-none focus:ring-2 focus:ring-mayorazgo-purple" placeholder="Escribe la cantidad de unidades...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejercicio 1.3: Descomposición -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 1.3: Escritura de números a partir de su descomposición</h3>
+                <p class="text-sm text-slate-600">Escribe en cifras el número completo correspondiente a cada descomposición por órdenes:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-medium">a) 4 DM + 2 UM + 5 D + 3 U =</label>
+                        <input type="number" id="m1_3a" class="w-full p-2 mt-1 border rounded outline-none focus:ring-2 focus:ring-mayorazgo-purple" placeholder="Escribe el número en cifras...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-medium">b) 7 DM + 3 UM + 8 C + 9 U =</label>
+                        <input type="number" id="m1_3b" class="w-full p-2 mt-1 border rounded outline-none focus:ring-2 focus:ring-mayorazgo-purple" placeholder="Escribe el número en cifras...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button type="button" id="btn_mod1" onclick="checkMod1()" class="px-6 py-3 bg-mayorazgo-purple text-white font-bold rounded-lg shadow hover:bg-mayorazgo-purpleDark transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-check-circle"></i> Comprobar Módulo 1
+                </button>
+                <button type="button" onclick="switchTab('mod2')" class="px-5 py-2.5 bg-slate-200 text-slate-700 font-semibold rounded-lg hover:bg-slate-300 transition-colors">
+                    Siguiente Módulo <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+            <div id="m1_feedback" class="hidden p-4 rounded-lg font-bold text-center"></div>
+        </section>
+
+        <!-- MÓDULO 2 -->
+        <section id="mod2" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-mayorazgo-green">
+                <h2 class="text-xl font-bold text-mayorazgo-green flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-down-1-9"></i> Módulo 2: Ordenación, Anterior/Posterior y Estimación
+                </h2>
+                <p class="text-slate-600 text-sm mt-1">Completa los ejercicios de orden y redondeo a la decena o centena.</p>
+            </div>
+
+            <!-- Ejercicio 2.1 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 2.1: Orden Creciente (Menor a Mayor)</h3>
+                <p class="text-sm text-slate-600">Selecciona la opción con el orden correcto para los números: <strong>45.012, 45.102, 40.512, 45.002, 45.200</strong></p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-center gap-2 p-2 bg-slate-50 rounded border cursor-pointer"><input type="radio" name="m2_1" value="a"> 45.200 &lt; 45.102 &lt; 45.012 &lt; 45.002 &lt; 40.512</label>
+                    <label class="flex items-center gap-2 p-2 bg-slate-50 rounded border cursor-pointer"><input type="radio" name="m2_1" value="b"> 40.512 &lt; 45.002 &lt; 45.012 &lt; 45.102 &lt; 45.200</label>
+                    <label class="flex items-center gap-2 p-2 bg-slate-50 rounded border cursor-pointer"><input type="radio" name="m2_1" value="c"> 40.512 &lt; 45.012 &lt; 45.002 &lt; 45.102 &lt; 45.200</label>
+                </div>
+            </div>
+
+            <!-- Ejercicio 2.2 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 2.2: Redondeo y Estimación</h3>
+                <p class="text-sm text-slate-600">Aproxima cada uno de los siguientes números según se indica:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-medium">a) Redondea <strong>47</strong> a la decena más cercana:</label>
+                        <input type="number" id="m2_2a" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-medium">b) Redondea <strong>382</strong> a la centena más cercana:</label>
+                        <input type="number" id="m2_2b" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejercicio 2.3 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 2.3: Número Anterior y Posterior</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-50 rounded border flex items-center gap-2">
+                        <input type="number" id="m2_ant1" placeholder="Anterior" class="p-2 border rounded w-full text-sm">
+                        <span class="font-bold text-sm">&lt; 9.999 &lt;</span>
+                        <input type="number" id="m2_post1" placeholder="Posterior" class="p-2 border rounded w-full text-sm">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border flex items-center gap-2">
+                        <input type="number" id="m2_ant2" placeholder="Anterior" class="p-2 border rounded w-full text-sm">
+                        <span class="font-bold text-sm">&lt; 25.400 &lt;</span>
+                        <input type="number" id="m2_post2" placeholder="Posterior" class="p-2 border rounded w-full text-sm">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button type="button" id="btn_mod2" onclick="checkMod2()" class="px-6 py-3 bg-mayorazgo-green text-white font-bold rounded-lg shadow hover:bg-green-800 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-check-circle"></i> Comprobar Módulo 2
+                </button>
+                <button type="button" onclick="switchTab('mod3')" class="px-5 py-2.5 bg-slate-200 text-slate-700 font-semibold rounded-lg hover:bg-slate-300 transition-colors">
+                    Siguiente Módulo <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+            <div id="m2_feedback" class="hidden p-4 rounded-lg font-bold text-center"></div>
+        </section>
+
+        <!-- MÓDULO 3 -->
+        <section id="mod3" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-mayorazgo-purple">
+                <h2 class="text-xl font-bold text-mayorazgo-purple flex items-center gap-2">
+                    <i class="fa-solid fa-calculator"></i> Módulo 3: Operaciones con Sumas y Restas
+                </h2>
+                <p class="text-slate-600 text-sm mt-1">Resuelve las operaciones de adición y sustracción indicadas.</p>
+            </div>
+
+            <!-- Ejercicio 3.1 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 3.1: Sumas Directas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-semibold">a) 1.245 + 3.412 =</label>
+                        <input type="number" id="m3_a" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-semibold">b) 5.830 + 2.195 =</label>
+                        <input type="number" id="m3_b" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejercicio 3.2 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 3.2: Restas Directas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-semibold">a) 4.780 - 1.350 =</label>
+                        <input type="number" id="m3_c" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-semibold">b) 8.500 - 3.245 =</label>
+                        <input type="number" id="m3_d" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejercicio 3.3 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 3.3: Operaciones Combinadas de Suma y Resta</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-semibold">a) (450 + 250) - 180 =</label>
+                        <input type="number" id="m3_e" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-semibold">b) 1.000 - (320 + 280) =</label>
+                        <input type="number" id="m3_f" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button type="button" id="btn_mod3" onclick="checkMod3()" class="px-6 py-3 bg-mayorazgo-purple text-white font-bold rounded-lg shadow hover:bg-mayorazgo-purpleDark transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-check-circle"></i> Comprobar Módulo 3
+                </button>
+                <button type="button" onclick="switchTab('mod4')" class="px-5 py-2.5 bg-slate-200 text-slate-700 font-semibold rounded-lg hover:bg-slate-300 transition-colors">
+                    Siguiente Módulo <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+            <div id="m3_feedback" class="hidden p-4 rounded-lg font-bold text-center"></div>
+        </section>
+
+        <!-- MÓDULO 4 -->
+        <section id="mod4" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-mayorazgo-gold">
+                <h2 class="text-xl font-bold text-amber-700 flex items-center gap-2">
+                    <i class="fa-solid fa-xmark"></i> Módulo 4: Operaciones de Multiplicación
+                </h2>
+                <p class="text-slate-600 text-sm mt-1">Aplica estrategias de cálculo, multiplicación por decenas completas y propiedad distributiva.</p>
+            </div>
+
+            <!-- Ejercicio 4.1 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 4.1: Multiplicaciones Directas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-semibold">a) 342 · 3 =</label>
+                        <input type="number" id="m4_a" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-semibold">b) 125 · 8 =</label>
+                        <input type="number" id="m4_b" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejercicio 4.2 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 4.2: Multiplicación por la Unidad Seguida de Ceros</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-semibold">a) 48 · 10 =</label>
+                        <input type="number" id="m4_c" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-semibold">b) 65 · 100 =</label>
+                        <input type="number" id="m4_d" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejercicio 4.3 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 4.3: Propiedad Distributiva y Estrategias</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-semibold">a) Aplica la propiedad distributiva: 4 · (10 + 5) =</label>
+                        <input type="number" id="m4_e" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border">
+                        <label class="block text-sm font-semibold">b) Calcula el doble de 350 multiplicando por 2:</label>
+                        <input type="number" id="m4_f" class="w-full p-2 mt-1 border rounded" placeholder="Resultado...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button type="button" id="btn_mod4" onclick="checkMod4()" class="px-6 py-3 bg-mayorazgo-gold text-white font-bold rounded-lg shadow hover:bg-amber-700 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-check-circle"></i> Comprobar Módulo 4
+                </button>
+                <button type="button" onclick="switchTab('mod5')" class="px-5 py-2.5 bg-slate-200 text-slate-700 font-semibold rounded-lg hover:bg-slate-300 transition-colors">
+                    Siguiente Módulo <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+            <div id="m4_feedback" class="hidden p-4 rounded-lg font-bold text-center"></div>
+        </section>
+
+        <!-- MÓDULO 5 -->
+        <section id="mod5" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-mayorazgo-green">
+                <h2 class="text-xl font-bold text-mayorazgo-green flex items-center gap-2">
+                    <i class="fa-solid fa-puzzle-piece"></i> Módulo 5: Problemas de Aplicación Cotidiana
+                </h2>
+                <p class="text-slate-600 text-sm mt-1">Resuelve los siguientes problemas de cálculo con números naturales.</p>
+            </div>
+
+            <!-- Ejercicio 5.1 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 5.1: Material para la Biblioteca del Instituto</h3>
+                <div class="p-4 bg-slate-50 rounded border space-y-2">
+                    <p class="text-sm font-medium">La biblioteca del IES El Mayorazgo ha comprado 8 estanterías nuevas. En cada estantería caben exactamente 45 libros. ¿Cuántos libros se pueden colocar en total en las 8 estanterías?</p>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="m5_p1" class="p-2 border rounded w-48 text-sm" placeholder="Respuesta en libros">
+                        <span class="text-sm font-semibold">libros</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejercicio 5.2 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 5.2: Organización de Cuadernos en el Almacén</h3>
+                <div class="p-4 bg-slate-50 rounded border space-y-2">
+                    <p class="text-sm font-medium">En el almacén del centro hay un total de 1.500 cuadernos. En la primera semana se reparten 450 cuadernos entre el alumnado y en la segunda semana se reparten 380 cuadernos. ¿Cuántos cuadernos quedan en el almacén?</p>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="m5_p2" class="p-2 border rounded w-48 text-sm" placeholder="Respuesta en cuadernos">
+                        <span class="text-sm font-semibold">cuadernos</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejercicio 5.3 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ejercicio 5.3: Compra de Material Escolar</h3>
+                <div class="p-4 bg-slate-50 rounded border space-y-2">
+                    <p class="text-sm font-medium">Un grupo de alumnos compra 15 mochilas escolares para una actividad. Si cada mochila cuesta 12 €, ¿cuánto dinero tienen que pagar en total?</p>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="m5_p3" class="p-2 border rounded w-48 text-sm" placeholder="Respuesta en €">
+                        <span class="text-sm font-semibold">€</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button type="button" id="btn_mod5" onclick="checkMod5()" class="px-6 py-3 bg-mayorazgo-green text-white font-bold rounded-lg shadow hover:bg-green-800 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-check-circle"></i> Comprobar Módulo 5
+                </button>
+                <button type="button" onclick="switchTab('modSummary')" class="px-5 py-2.5 bg-mayorazgo-gold text-slate-900 font-bold rounded-lg hover:bg-amber-400 transition-colors">
+                    Ir al Resumen Final <i class="fa-solid fa-award ml-1"></i>
+                </button>
+            </div>
+            <div id="m5_feedback" class="hidden p-4 rounded-lg font-bold text-center"></div>
+        </section>
+
+        <!-- RESUMEN Y INFORME -->
+        <section id="modSummary" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow border-t-4 border-mayorazgo-gold text-center space-y-3">
+                <h2 class="text-2xl font-bold text-mayorazgo-purple">Resumen General del Cuaderno - 1º ESO (4)</h2>
+                <p class="text-sm text-slate-600">Calcula la calificación final y genera el desglose detallado para guardar o entregar.</p>
+                <button type="button" onclick="calculateGlobalScore()" class="px-8 py-3 bg-mayorazgo-purple text-white font-bold text-lg rounded-xl shadow hover:bg-mayorazgo-purpleDark transition-all">
+                    Calcular Nota Final y Generar Reporte Detallado
+                </button>
+            </div>
+
+            <div id="scoreDashboard" class="hidden space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow text-center border border-mayorazgo-purpleLight">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Calificación Global</span>
+                    <div id="finalScoreGrade" class="text-5xl font-black text-mayorazgo-purple my-2">0.0</div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow border space-y-4">
+                    <h3 class="font-bold text-lg border-b pb-2 text-mayorazgo-purpleDark">Informe Completo de Respuestas</h3>
+                    <div id="fullReportDetails" class="space-y-3 text-sm"></div>
+                </div>
+
+                <div class="bg-slate-800 text-white p-6 rounded-xl shadow flex items-center justify-between">
+                    <div>
+                        <h4 class="font-bold text-lg text-mayorazgo-gold">Guardar o Entregar</h4>
+                        <p class="text-xs text-slate-300">Guarda esta vista en PDF o imprímela para entregar en clase.</p>
+                    </div>
+                    <button type="button" onclick="window.print()" class="px-5 py-2.5 bg-mayorazgo-gold text-slate-900 font-bold rounded-lg hover:bg-amber-400 transition-colors">
+                        <i class="fa-solid fa-print"></i> Guardar PDF / Imprimir
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const scores = { m1: null, m2: null, m3: null, m4: null, m5: null };
+
+        function switchTab(id) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById('tab-' + id).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function lockFields(containerId) {
+            const container = document.getElementById(containerId);
+            const inputs = container.querySelectorAll('input');
+            inputs.forEach(el => el.disabled = true);
+        }
+
+        function checkMod1() {
+            let q1a = parseInt(document.getElementById('m1_1a').value) || 0;
+            let q1b = parseInt(document.getElementById('m1_1b').value) || 0;
+            let q1c = parseInt(document.getElementById('m1_1c').value) || 0;
+            let q1d = parseInt(document.getElementById('m1_1d').value) || 0;
+
+            let q2a = parseInt(document.getElementById('m1_2a').value) || 0;
+            let q2b = parseInt(document.getElementById('m1_2b').value) || 0;
+            let q2c = parseInt(document.getElementById('m1_2c').value) || 0;
+            let q2d = parseInt(document.getElementById('m1_2d').value) || 0;
+
+            let q3a = parseInt(document.getElementById('m1_3a').value) || 0;
+            let q3b = parseInt(document.getElementById('m1_3b').value) || 0;
+
+            let c = 0;
+            if (q1a === 5412) c++;
+            if (q1b === 12305) c++;
+            if (q1c === 34890) c++;
+            if (q1d === 76004) c++;
+
+            if (q2a === 6000) c++;
+            if (q2b === 30000) c++;
+            if (q2c === 8000) c++;
+            if (q2d === 90000) c++;
+
+            if (q3a === 42053) c++;
+            if (q3b === 73809) c++;
+
+            scores.m1 = (c / 10) * 10;
+            let fb = document.getElementById('m1_feedback');
+            fb.classList.remove('hidden');
+            fb.className = "p-4 rounded-lg font-bold text-center " + (scores.m1 >= 5 ? "bg-green-100 text-green-800" : "bg-amber-100 text-amber-800");
+            fb.innerText = `Módulo 1 Comprobado. Nota: ${scores.m1.toFixed(1)} / 10. (Respuestas registradas y bloqueadas)`;
+            
+            lockFields('mod1');
+        }
+
+        function checkMod2() {
+            let r1 = document.querySelector('input[name="m2_1"]:checked')?.value;
+            let r2a = parseInt(document.getElementById('m2_2a').value) || 0;
+            let r2b = parseInt(document.getElementById('m2_2b').value) || 0;
+            
+            let ant1 = parseInt(document.getElementById('m2_ant1').value) || 0;
+            let post1 = parseInt(document.getElementById('m2_post1').value) || 0;
+            let ant2 = parseInt(document.getElementById('m2_ant2').value) || 0;
+            let post2 = parseInt(document.getElementById('m2_post2').value) || 0;
+
+            let c = 0;
+            if (r1 === 'b') c++;
+            if (r2a === 50) c++;
+            if (r2b === 400) c++;
+            if (ant1 === 9998) c++;
+            if (post1 === 10000) c++;
+            if (ant2 === 25399) c++;
+            if (post2 === 25401) c++;
+
+            scores.m2 = (c / 7) * 10;
+            let fb = document.getElementById('m2_feedback');
+            fb.classList.remove('hidden');
+            fb.className = "p-4 rounded-lg font-bold text-center " + (scores.m2 >= 5 ? "bg-green-100 text-green-800" : "bg-amber-100 text-amber-800");
+            fb.innerText = `Módulo 2 Comprobado. Nota: ${scores.m2.toFixed(1)} / 10. (Respuestas registradas y bloqueadas)`;
+
+            lockFields('mod2');
+        }
+
+        function checkMod3() {
+            let a = parseInt(document.getElementById('m3_a').value) || 0;
+            let b = parseInt(document.getElementById('m3_b').value) || 0;
+            let c_val = parseInt(document.getElementById('m3_c').value) || 0;
+            let d = parseInt(document.getElementById('m3_d').value) || 0;
+            let e = parseInt(document.getElementById('m3_e').value) || 0;
+            let f = parseInt(document.getElementById('m3_f').value) || 0;
+
+            let c = 0;
+            if (a === 4657) c++;
+            if (b === 8025) c++;
+            if (c_val === 3430) c++;
+            if (d === 5255) c++;
+            if (e === 520) c++;
+            if (f === 400) c++;
+
+            scores.m3 = (c / 6) * 10;
+            let fb = document.getElementById('m3_feedback');
+            fb.classList.remove('hidden');
+            fb.className = "p-4 rounded-lg font-bold text-center " + (scores.m3 >= 5 ? "bg-green-100 text-green-800" : "bg-amber-100 text-amber-800");
+            fb.innerText = `Módulo 3 Comprobado. Nota: ${scores.m3.toFixed(1)} / 10. (Respuestas registradas y bloqueadas)`;
+
+            lockFields('mod3');
+        }
+
+        function checkMod4() {
+            let a = parseInt(document.getElementById('m4_a').value) || 0;
+            let b = parseInt(document.getElementById('m4_b').value) || 0;
+            let c_val = parseInt(document.getElementById('m4_c').value) || 0;
+            let d = parseInt(document.getElementById('m4_d').value) || 0;
+            let e = parseInt(document.getElementById('m4_e').value) || 0;
+            let f = parseInt(document.getElementById('m4_f').value) || 0;
+
+            let c = 0;
+            if (a === 1026) c++;
+            if (b === 1000) c++;
+            if (c_val === 480) c++;
+            if (d === 6500) c++;
+            if (e === 60) c++;
+            if (f === 700) c++;
+
+            scores.m4 = (c / 6) * 10;
+            let fb = document.getElementById('m4_feedback');
+            fb.classList.remove('hidden');
+            fb.className = "p-4 rounded-lg font-bold text-center " + (scores.m4 >= 5 ? "bg-green-100 text-green-800" : "bg-amber-100 text-amber-800");
+            fb.innerText = `Módulo 4 Comprobado. Nota: ${scores.m4.toFixed(1)} / 10. (Respuestas registradas y bloqueadas)`;
+
+            lockFields('mod4');
+        }
+
+        function checkMod5() {
+            let p1 = parseInt(document.getElementById('m5_p1').value) || 0;
+            let p2 = parseInt(document.getElementById('m5_p2').value) || 0;
+            let p3 = parseInt(document.getElementById('m5_p3').value) || 0;
+
+            let c = 0;
+            if (p1 === 360) c++;
+            if (p2 === 670) c++;
+            if (p3 === 180) c++;
+
+            scores.m5 = (c / 3) * 10;
+            let fb = document.getElementById('m5_feedback');
+            fb.classList.remove('hidden');
+            fb.className = "p-4 rounded-lg font-bold text-center " + (scores.m5 >= 5 ? "bg-green-100 text-green-800" : "bg-amber-100 text-amber-800");
+            fb.innerText = `Módulo 5 Comprobado. Nota: ${scores.m5.toFixed(1)} / 10. (Respuestas registradas y bloqueadas)`;
+
+            lockFields('mod5');
+        }
+
+        function calculateGlobalScore() {
+            if (scores.m1 === null) checkMod1();
+            if (scores.m2 === null) checkMod2();
+            if (scores.m3 === null) checkMod3();
+            if (scores.m4 === null) checkMod4();
+            if (scores.m5 === null) checkMod5();
+
+            let avg = (scores.m1 + scores.m2 + scores.m3 + scores.m4 + scores.m5) / 5;
+            document.getElementById('scoreDashboard').classList.remove('hidden');
+            document.getElementById('finalScoreGrade').innerText = avg.toFixed(1);
+
+            let student = document.getElementById('studentName').value || "Anónimo";
+            let details = document.getElementById('fullReportDetails');
+            
+            details.innerHTML = `
+                <p class="font-bold border-b pb-1">Alumno/a: ${student}</p>
+                <div class="p-2 bg-slate-50 rounded"><strong>Módulo 1 (Valor Posicional y Escritura):</strong> Nota ${scores.m1.toFixed(1)}/10</div>
+                <div class="p-2 bg-slate-50 rounded"><strong>Módulo 2 (Ordenación y Estimación):</strong> Nota ${scores.m2.toFixed(1)}/10</div>
+                <div class="p-2 bg-slate-50 rounded"><strong>Módulo 3 (Sumas y Restas):</strong> Nota ${scores.m3.toFixed(1)}/10</div>
+                <div class="p-2 bg-slate-50 rounded"><strong>Módulo 4 (Multiplicación):</strong> Nota ${scores.m4.toFixed(1)}/10</div>
+                <div class="p-2 bg-slate-50 rounded"><strong>Módulo 5 (Problemas):</strong> Nota ${scores.m5.toFixed(1)}/10</div>
+            `;
+        }
+    </script>
+</body>
+</html>
